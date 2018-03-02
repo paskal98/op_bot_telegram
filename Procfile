@@ -1,1 +1,1 @@
-web: python main.py -p 443
+web: python main.py bundle exec rails s -p 443

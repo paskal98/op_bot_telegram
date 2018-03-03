@@ -53,15 +53,14 @@ def ParseString(outHTML):
 
 # Многопоточный цыкл автоуведомления
 def clock(user_id):
-
  for i in clients:
   if i['user']['chat_id']==user_id:
+    bot.send_message(user_id, '+')
     while True:
         if i['user']['notify_on_of'] == True:
             break
         now=datetime.datetime.now()
         wakeup=datetime.time(int(i['user']['hour']),int(i['user']['minutes']),0)
-        bot.send_message(user_id, '+')
         if now.hour == wakeup.hour and now.minute == wakeup.minute:
 
             if int(i['user']['hour']) >= 16:

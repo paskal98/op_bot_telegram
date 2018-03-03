@@ -55,8 +55,8 @@ def ParseString(outHTML):
 def clock(user_id):
  for i in clients:
   if i['user']['chat_id']==user_id:
-    bot.send_message(user_id, '+')
     while True:
+        bot.send_message(user_id, '+')
         if i['user']['notify_on_of'] == True:
             break
         now=datetime.datetime.now()

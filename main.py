@@ -215,7 +215,10 @@ def handle_list(message):
 def handle_text(message):
  handle_text_0(message)
 
-
+@bot.message_handler(commands=['time'])
+def handle_text(message):
+    now=datetime.datetime.now()
+    bot.send_message(message.chat.id,'{}:{}:{}'.format(now.hour,now.minute,now.second))
 
 #Text coomands
 

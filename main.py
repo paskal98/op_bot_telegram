@@ -56,7 +56,6 @@ def clock(user_id):
  for i in clients:
   if i['user']['chat_id']==user_id:
     while True:
-        bot.send_message(user_id, '+')
         if i['user']['notify_on_of'] == True:
             break
         now=datetime.datetime.now()
@@ -68,6 +67,7 @@ def clock(user_id):
                 clock_on_process(user_id, now, i['user']['hour'])
             elif int(i['user']['hour']) < 16:
                 clock_on_process(user_id, now, i['user']['hour'])
+        bot.send_message(user_id, '+')
     i['user']['notify_on_of'] = False
 
 def clock_on_process(user_id,now,setday):

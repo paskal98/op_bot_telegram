@@ -1,1 +1,1 @@
-web: python main.py bundle exec rails s -p 443
+worker: python main.py bundle exec rails s -p 443

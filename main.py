@@ -61,8 +61,9 @@ def clock(user_id):
             break
         now=datetime.datetime.now()
         wakeup=datetime.time(int(i['user']['hour']),int(i['user']['minutes']),0)
+        bot.send_message(user_id, '+')
         if now.hour == wakeup.hour and now.minute == wakeup.minute:
-            bot.send_message(user_id, '+')
+
             if int(i['user']['hour']) >= 16:
                 now=now+datetime.timedelta(days=1)
                 clock_on_process(user_id, now, i['user']['hour'])

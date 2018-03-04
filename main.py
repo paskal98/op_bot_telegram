@@ -210,7 +210,7 @@ def handle_text(message):
 
 def say_update(message):
     for i in clients:
-        bot.send_message(message.chat.id, '{} {}'.format(message.text,u'\U0001f609'), reply_markup=markup,
+        bot.send_message(i['user']['chat_id'], '{} '.format(message.text), reply_markup=markup,
                          parse_mode='html')
 
 @bot.message_handler(commands=['sendclients'])

@@ -178,11 +178,6 @@ def check_this(message,parameter='NULL'):
         bot.send_message(message.chat.id, 'Возникли ошибки... :(')
 
 
-def save():
-    with open('clients_list.py', 'w') as file2:
-        file2.write(json.dumps(clients))
-        file2.close()
-
 
 #Админ панель
 
@@ -338,7 +333,7 @@ def get_answer(message):
                  i['user']['group']=message.text
                  news = 'Отлично!\nВаша група: {}'.format(i['user']['group'])
                  bot.send_message(message.chat.id, news)
-                 save()
+
             else :
                 check_this(message,parameter='Ввести группу')
             break  ###BOOST
@@ -550,7 +545,7 @@ def set_notificate(message):
             i['user']['notification_bool']=True
             i['user']['notify_on_of'] = False
             main_keyboard(message,inject="Уведомления включены")
-            save()
+
         elif i['user']['notification_bool']==True:
              main_keyboard(message, inject="Уведомления уже включены")
     elif message.text==u'\U00002716':
@@ -558,7 +553,7 @@ def set_notificate(message):
             i['user']['notification_bool']=False
             i['user']['notify_on_of'] = True
             main_keyboard(message, inject="Уведомления отключены")
-            save()
+
         elif i['user']['notification_bool']==False:
             main_keyboard(message, inject="Уведомления уже отключены")
     elif 'Назад' in message.text:
@@ -617,7 +612,7 @@ def set_aday(message):
                     bot.send_message(message.chat.id, 'Отлично!\nВремя уведомлений: {}'.format(message.text))
                     i['user']['hour']=str[0]
                     i['user']['minutes'] = str[1]
-                    save()
+
                 else :
                     check_this(message,parameter='Время уведомлений')
             else:

@@ -6,7 +6,7 @@ from telebot import types
 import threading
 import json
 import DB
-
+import gc
 
 #bot=telebot.TeleBot('516454220:AAEBUTygMYAHsKzjzJvqRlesULc7Q4wnbo8', threaded=False) #@StarterPack_bot
 bot=telebot.TeleBot('539989058:AAGJsaK1LAMklwJJhtERJi0jcwloyayitmc', threaded=False) #@nuft_op_bot
@@ -315,7 +315,8 @@ def handle_text_0(message):
             elif 'Назад' in message.text:
                 main_keyboard_2(message, inject=u'\U0001f609')
             gc.collect()
-        except:
+        except Exception as e:
+            print(e)
             bot.send_message(message.chat.id, 'Возникли ошибки... :(')
 
 

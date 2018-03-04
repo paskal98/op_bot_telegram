@@ -23,18 +23,17 @@ markup.row('{} Помощь'.format(u'\U00002753', u'\U00002753'),
 
 
 #op
-op_3_7=[]
-op_3_7ck=[]
-op_3_8=[]
-op_4_7=[]
-op_4_8=[]
-op_1_6m=[]
-op_1_7m=[]
+op_3_7=DB.op_3_7
+op_3_7ck=DB.op_3_7ck
+op_3_8=DB.op_3_8
+op_4_7=DB.op_4_7
+op_4_8=DB.op_4_8
+op_1_6m=DB.op_1_6m
+op_1_7m=DB.op_1_7m
 
 
 # данные о клиентах
-clients=[]
-
+clients = []
 
 
 #данные о подержуемых группах
@@ -179,6 +178,11 @@ def check_this(message,parameter='NULL'):
         bot.send_message(message.chat.id, 'Возникли ошибки... :(')
 
 
+def save():
+    with open('clients_list.py', 'w') as file2:
+        file2.write(json.dumps(clients))
+        file2.close()
+
 
 #Админ панель
 
@@ -237,13 +241,12 @@ def handle_text(message):
 def handle_text(message):
  if message.chat.id == 442738038:
      bot.send_message(message.chat.id, "Ведите 0 - всех кроме, а сумму всех-1 для отображения последнего")
+     bot.send_message(message.chat.id, '<b>User count:</b> {}'.format(len(clients)), parse_mode='html')
      bot.register_next_step_handler(message, handle_list)
 
 def handle_list(message):
     try:
         j = 0
-        print(clients)
-        bot.send_message(message.chat.id, '<b>User count:</b> {}'.format(len(clients)), parse_mode='html')
         for i in clients:
             if int(message.text)<=j:
                  bot.send_message(message.chat.id,
@@ -335,7 +338,7 @@ def get_answer(message):
                  i['user']['group']=message.text
                  news = 'Отлично!\nВаша група: {}'.format(i['user']['group'])
                  bot.send_message(message.chat.id, news)
-
+                 save()
             else :
                 check_this(message,parameter='Ввести группу')
             break  ###BOOST
@@ -547,7 +550,7 @@ def set_notificate(message):
             i['user']['notification_bool']=True
             i['user']['notify_on_of'] = False
             main_keyboard(message,inject="Уведомления включены")
-
+            save()
         elif i['user']['notification_bool']==True:
              main_keyboard(message, inject="Уведомления уже включены")
     elif message.text==u'\U00002716':
@@ -555,7 +558,7 @@ def set_notificate(message):
             i['user']['notification_bool']=False
             i['user']['notify_on_of'] = True
             main_keyboard(message, inject="Уведомления отключены")
-
+            save()
         elif i['user']['notification_bool']==False:
             main_keyboard(message, inject="Уведомления уже отключены")
     elif 'Назад' in message.text:
@@ -614,7 +617,7 @@ def set_aday(message):
                     bot.send_message(message.chat.id, 'Отлично!\nВремя уведомлений: {}'.format(message.text))
                     i['user']['hour']=str[0]
                     i['user']['minutes'] = str[1]
-
+                    save()
                 else :
                     check_this(message,parameter='Время уведомлений')
             else:
@@ -627,6 +630,11 @@ def set_aday(message):
 
 # main start
 
+def read_clients():
+    with open('clients_list.py', 'r') as file:
+        data = json.load(file)
+        return data
+
 def auto_notify():
             t=threading
             t = threading.Thread(target=clock)
@@ -636,22 +644,9 @@ def auto_notify():
 
 if __name__ =='__main__':
    try:
-
     Global_set()
-
     auto_notify()
-
-
-    clients=DB.clients
-
-    op_3_7=DB.op_3_7
-    op_3_7ck=DB.op_3_7ck
-    op_3_8=DB.op_3_8
-    op_4_7=DB.op_4_7
-    op_4_8=DB.op_4_8
-    op_1_6m=DB.op_1_6m
-    op_1_7m=DB.op_1_7m
-
+    clients=read_clients()
 
    except Exception as e:
        print(e)

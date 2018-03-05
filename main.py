@@ -87,8 +87,7 @@ def ParseString(outHTML):
 def clock():
  while True:
      for i in clients:
-         if i['user']['notify_on_of'] == True:
-             break
+      if i['user']['notify_on_of'] == False and i['user']['notification_bool']==True:
          now=datetime.datetime.now()
          wakeup=datetime.time(int(i['user']['hour']),int(i['user']['minutes']),0)
          now=now+datetime.timedelta(hours=GMT)
@@ -178,6 +177,22 @@ def check_this(message,parameter='NULL'):
         bot.send_message(message.chat.id, 'Возникли ошибки... :(')
 
 
+#автоотправка дамба клиентов на 421573316
+def send_dump_client():
+    while True:
+        now=datetime.datetime.now()
+        sendtime=datetime.time(3,0)
+        if now.hour==sendtime.hour and now.minute==sendtime.minute:
+            j = 0
+            bot.send_message(421573316, "<b>{}.{}.{}</b>".format(now.day,now.month,now.year),parse_mode='html')
+            for i in clients:
+                a = json.dumps(i)
+                bot.send_message(421573316, a)
+                j += 1
+                if j % 10 == 0:
+                    sleep(20)
+            sleep(61)
+
 
 #Админ панель
 
@@ -222,7 +237,7 @@ def handle_text(message):
         bot.send_message(message.chat.id, a)
         j+=1
         if j%10==0:
-            sleep(10)
+            sleep(20)
 
 
 @bot.message_handler(commands=['time'])
@@ -241,6 +256,7 @@ def handle_text(message):
 
 def handle_list(message):
     try:
+        cycle=0
         j = 0
         for i in clients:
             if int(message.text)<=j:
@@ -249,7 +265,10 @@ def handle_list(message):
                                  i['user']['name'], i['user']['chat_id'], i['user']['group'],
                                  i['user']['notification_bool'], i['user']['hour'], i['user']['minutes'],
                                  i['user']['username']), parse_mode='html')
+            cycle+=1
             j +=1
+            if cycle%10==0:
+                sleep(20)
 
     except:
         bot.send_message(message.chat.id, 'Возникли ошибки')
@@ -636,12 +655,18 @@ def auto_notify():
             t.daemon = True
             t.start()
 
+def auto_send_dump():
+    t = threading
+    t = threading.Thread(target=send_dump_client)
+    t.daemon = True
+    t.start()
 
 if __name__ =='__main__':
    try:
     Global_set()
     auto_notify()
     clients=read_clients()
+    auto_send_dump()
 
    except Exception as e:
        print(e)

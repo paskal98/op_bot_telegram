@@ -8,7 +8,7 @@ import json
 import DB
 import gc
 
-#bot=telebot.TeleBot('516454220:AAEBUTygMYAHsKzjzJvqRlesULc7Q4wnbo8', threaded=False) #@StarterPack_bot
+bot=telebot.TeleBot('516454220:AAEBUTygMYAHsKzjzJvqRlesULc7Q4wnbo8', threaded=False) #@StarterPack_bot
 bot=telebot.TeleBot('539989058:AAGJsaK1LAMklwJJhtERJi0jcwloyayitmc', threaded=False) #@nuft_op_bot
 
 # ГЛАВНАЯ КЛАВИАТУРА
@@ -463,7 +463,7 @@ def handle_text_3(user_id):
             I += 1
           bot.send_message(user_id, send,parse_mode="html")
      else:
-        bot.send_message(user_id, "<b>Группа не заполнена! Что бы вывести расписание, её нужно заполнить</b>")
+        bot.send_message(user_id, "<b>Группа не заполнена! Что бы вывести расписание, её нужно заполнить</b>", parse_mode="html")
      break  ###BOOST
 
 def handle_text_3_week(message):
@@ -517,7 +517,7 @@ def handle_text_3_week(message):
                         break
                     j+=1
             else:
-                bot.send_message(message.chat.id, "<b>Сначала заполните группу, тогда расписание появиться</b>")
+                bot.send_message(message.chat.id, "<b>Сначала заполните группу, тогда расписание появиться</b>", parse_mode="html")
             break  ###BOOST
 
 def day_of_week(day=0):
@@ -552,7 +552,7 @@ def handle_text_4(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     markup.row(u'\U00002714', u'\U00002716')
     markup.row('{} Назад'.format(u'\U00002b05'))
-    bot.send_message(message.chat.id, '<b>Включить уведомления о парах?</b>', reply_markup=markup,parse_mode='html')
+    bot.send_message(message.chat.id, '<b>Включить автооповещения пар по заданому веремени?</b>', reply_markup=markup,parse_mode='html')
 
     bot.register_next_step_handler(message, set_notificate)
 
@@ -588,7 +588,7 @@ def handle_text_5(message):
     bot.send_message(message.chat.id,
                      '{}  <b>Ввести группу</b> - заполните свою группу, она сохранится и в дальнейшем по ней будет виводиться расписание. Чтобы заполнить ее правильно, необходимо ставить \" - \" \n<b>Пример:</b> ОП-1-11\n\n '
                      '{}  <b>День</b> - с помощью этой команды можно ввести дату самому <b>(дд.мм.гг)</b>, так же можно нажать на кнопки  <b>(Сегодня, Завтра, Эта неделя, Следующая неделя)</b>\n<b>Пример:</b> 20.04.20\n\n'
-                     '{} <b>Уведомлять</b> - здесь есть возможность включить автооповещание о парах, по умолчанию стоит <b>7:00</b> и уведомления отключены\n\n'
+                     '{} <b>Уведомлять</b> - здесь есть возможность включить автооповещание о парах, по умолчанию стоит <b>7:00</b> и автооповещания отключены\n\n'
                      '{}  <b>Инфо</b> - информация о заполненых полях и не только\n\n'
                      '{} <b>Время уведомлений</b> - тут можно изменить время с <b>7:00</b> на любое другое'.format(
                          u'\U0001f393', u'\U0001f4c5',

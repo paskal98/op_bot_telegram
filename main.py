@@ -8,7 +8,7 @@ import json
 import DB
 import gc
 
-bot=telebot.TeleBot('516454220:AAEBUTygMYAHsKzjzJvqRlesULc7Q4wnbo8', threaded=False) #@StarterPack_bot
+#bot=telebot.TeleBot('516454220:AAEBUTygMYAHsKzjzJvqRlesULc7Q4wnbo8', threaded=False) #@StarterPack_bot
 bot=telebot.TeleBot('539989058:AAGJsaK1LAMklwJJhtERJi0jcwloyayitmc', threaded=False) #@nuft_op_bot
 
 # ГЛАВНАЯ КЛАВИАТУРА
@@ -16,7 +16,7 @@ markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
 markup.row('{} Ввести группу'.format(u'\U0001f393', u'\U0001f393'),
            '{} День'.format(u'\U0001f4c5', u'\U0001f4c5'))
 markup.row('{} Уведомлять'.format(u'\U0001f4cc', u'\U0001f4cc'))
-markup.row('{} Время уведомлений'.format(u'\U000026a0', u'\U000026a0'))
+markup.row('{} Уст. Время уведомлений'.format(u'\U000026a0', u'\U000026a0'))
 markup.row('{} Помощь'.format(u'\U00002753', u'\U00002753'),
            '{} Инфо'.format(u'\U0001f4bf', u'\U0001f4bf'))
 

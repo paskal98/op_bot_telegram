@@ -100,6 +100,7 @@ def clock():
 
 def clock_on_process(user_id,now,setday,i):
     setday = str(now.day) + '.' + str(now.month) + '.' + str(now.year)
+    print(setday)
     bot.send_message(user_id, '<b>{} - {}</b>'.format(setday, day_of_week(now.isoweekday())), parse_mode="html")
     handle_text_3(user_id)
 

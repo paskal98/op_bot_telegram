@@ -221,12 +221,14 @@ def GMT_set(message):
 @bot.message_handler(commands=['sayupdate'])
 def handle_text(message):
     if message.chat.id == 442738038:
-        bot.send_message(message.chat.id,"Ведите сообщения для оповещения всем!")
-        bot.register_next_step_handler(message, say_update)
+       bot.send_message(message.chat.id,'Пример команды: SAY: update!')
+       bot.register_next_step_handler(message,say_update)
 
 def say_update(message):
-    for i in clients:
-        bot.send_message(i['user']['chat_id'], '{} '.format(message.text), reply_markup=markup,
+    if 'SAY:' in message.text:
+      text=message.text.split('SAY:')
+      for i in clients:
+          bot.send_message(i['user']['chat_id'], '{} '.format(text), reply_markup=markup,
                          parse_mode='html')
 
 @bot.message_handler(commands=['sendclients'])

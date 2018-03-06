@@ -16,7 +16,7 @@ markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
 markup.row('{} Ввести группу'.format(u'\U0001f393', u'\U0001f393'),
            '{} День'.format(u'\U0001f4c5', u'\U0001f4c5'))
 markup.row('{} Уведомлять'.format(u'\U0001f4cc', u'\U0001f4cc'))
-markup.row('{} Уст. Время уведомлений'.format(u'\U000026a0', u'\U000026a0'))
+markup.row('{} Уст. время уведомлений'.format(u'\U000026a0', u'\U000026a0'))
 markup.row('{} Помощь'.format(u'\U00002753', u'\U00002753'),
            '{} Инфо'.format(u'\U0001f4bf', u'\U0001f4bf'))
 
@@ -327,7 +327,7 @@ def handle_text_0(message):
                 handle_text_5(message)
             elif 'Инфо' in message.text:
                 handle_text_6(message)
-            elif 'Время уведомлений' in message.text:
+            elif 'Уст. время уведомлений' in message.text:
                 handle_text_7(message)
             elif 'Назад' in message.text:
                 main_keyboard_2(message, inject=u'\U0001f609')
@@ -374,7 +374,7 @@ def handle_text_2(message):
     markup.row('Сегодня', 'Завтра')
     markup.row('Эта неделя', 'Следующая неделя')
     markup.row('{} Назад'.format(u'\U00002b05'))
-    bot.send_message(message.chat.id, '<b>Выберете вариант ответа или введите дату</b>\n(Пример: 04.04.20)', reply_markup=markup,parse_mode='html')
+    bot.send_message(message.chat.id, '<b>Выберете вариант ответа или введите дату</b>\n(Пример: 4.4.20)', reply_markup=markup,parse_mode='html')
 
     bot.register_next_step_handler(message, get_days)
 
@@ -407,7 +407,7 @@ def get_days(message):
              dayset_check = dayset.split('.')
              if len(dayset_check) == 3 and dayset_check[0].isdigit() and dayset_check[1].isdigit() and dayset_check[2].isdigit():
                 i['user']['setday'] ='{}.{}.{}'.format(dayset_check[0], dayset_check[1],int(dayset_check[2])+2000)
-                news = '\nОтлично!\nДата: {}'.format(i['user']['setday'])
+                news = 'Отлично!\nДата: {}'.format(i['user']['setday'])
                 main_keyboard(message, inject=news)
                 handle_text_3(message.chat.id)
              else :
@@ -587,10 +587,10 @@ def set_notificate(message):
 def handle_text_5(message):
     bot.send_message(message.chat.id,
                      '{}  <b>Ввести группу</b> - заполните свою группу, она сохранится и в дальнейшем по ней будет виводиться расписание. Чтобы заполнить ее правильно, необходимо ставить \" - \" \n<b>Пример:</b> ОП-1-11\n\n '
-                     '{}  <b>День</b> - с помощью этой команды можно ввести дату самому <b>(дд.мм.гг)</b>, так же можно нажать на кнопки  <b>(Сегодня, Завтра, Эта неделя, Следующая неделя)</b>\n<b>Пример:</b> 20.04.20\n\n'
+                     '{}  <b>День</b> - с помощью этой команды можно ввести дату самому <b>(д.м.гг)</b>, так же можно нажать на кнопки  <b>(Сегодня, Завтра, Эта неделя, Следующая неделя)</b>\n<b>Пример:</b> 20.04.20\n\n'
                      '{} <b>Уведомлять</b> - здесь есть возможность включить автооповещание о парах, по умолчанию стоит <b>7:00</b> и автооповещания отключены\n\n'
                      '{}  <b>Инфо</b> - информация о заполненых полях и не только\n\n'
-                     '{} <b>Уст. Время уведомлений</b> - тут можно изменить время автооповещаний с <b>7:00</b> на любое другое'.format(
+                     '{} <b>Уст. время уведомлений</b> - тут можно изменить время автооповещаний с <b>7:00</b> на любое другое'.format(
                          u'\U0001f393', u'\U0001f4c5',
                          u'\U0001f4cc', u'\U0001f4bf',
                          u'\U000026a0'), parse_mode="html")

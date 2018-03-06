@@ -98,10 +98,10 @@ def clock():
              elif int(i['user']['hour']) < 16:
                  clock_on_process(i['user']['chat_id'], now, i['user']['hour'],i)
 
-def clock_on_process(user_id,now,setday,i):
-    setday = str(now.day) + '.' + str(now.month) + '.' + str(now.year)
-    print(setday)
-    bot.send_message(user_id, '<b>{} - {}</b>'.format(setday, day_of_week(now.isoweekday())), parse_mode="html")
+def clock_on_process(user_id,now1,setday,i):
+    setday = str(now1.day) + '.' + str(now1.month) + '.' + str(now1.year)
+    i['user']['setday']='{}.{}.{}'.format(now1.day,now1.month,now1.year)
+    bot.send_message(user_id, '<b>{} - {}</b>'.format(setday, day_of_week(now1.isoweekday())), parse_mode="html")
     handle_text_3(user_id)
 
     t = threading
@@ -439,7 +439,7 @@ def handle_text_3(user_id):
    if i['user']['chat_id']==user_id:
      if i['user']['group'] != '' and i['user']['setday'] != '':
         bot.send_message(user_id, "Подождите пожайлуста пару секунд...")
-
+        print(i['user']['setday'])
         out=Base(i['user']['group'],i['user']['setday'])
         text=ParseString(out)
 

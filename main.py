@@ -10,8 +10,8 @@ import gc
 
 
 
-bot=telebot.TeleBot('516454220:AAEBUTygMYAHsKzjzJvqRlesULc7Q4wnbo8', threaded=False) #@StarterPack_bot
-#bot=telebot.TeleBot('539989058:AAGJsaK1LAMklwJJhtERJi0jcwloyayitmc', threaded=False) #@nuft_op_bot
+#bot=telebot.TeleBot('516454220:AAEBUTygMYAHsKzjzJvqRlesULc7Q4wnbo8', threaded=False) #@StarterPack_bot
+bot=telebot.TeleBot('539989058:AAGJsaK1LAMklwJJhtERJi0jcwloyayitmc', threaded=False) #@nuft_op_bot
 
 # ГЛАВНАЯ КЛАВИАТУРА
 markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -331,7 +331,7 @@ def handle_text_0(message):
 #Группа
 
 def handle_text_1(message):
-    bot.send_message(message.chat.id, '<b>Введите вашу групу</b>\nДоступные группы :\n<b>ОП-3-7, ОП-3-7ск, ОП-3-8, ОП-4-8, ОП-4-7, ОП-1-6м, ОП-1-7м</b>\nВнимание, введёная группа <b>сохранаяется!</b>\n(Пример: ОП-3-7)',parse_mode='html')
+    bot.send_message(message.chat.id, '<b>Введите вашу групу</b>\n<b>Доступны все группы</b>\nВнимание, введёная группа <b>сохранаяется!</b>\n(Пример: ОП-3-7)',parse_mode='html')
 
     bot.register_next_step_handler(message, get_answer)
 

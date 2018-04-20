@@ -5,31 +5,23 @@ import codecs
 from telebot import types
 import threading
 import json
-import DB
+import dict_of_groups,list_of_groups,ALL_DB
 import gc
 
-#bot=telebot.TeleBot('516454220:AAEBUTygMYAHsKzjzJvqRlesULc7Q4wnbo8', threaded=False) #@StarterPack_bot
-bot=telebot.TeleBot('539989058:AAGJsaK1LAMklwJJhtERJi0jcwloyayitmc', threaded=False) #@nuft_op_bot
+
+
+bot=telebot.TeleBot('516454220:AAEBUTygMYAHsKzjzJvqRlesULc7Q4wnbo8', threaded=False) #@StarterPack_bot
+#bot=telebot.TeleBot('539989058:AAGJsaK1LAMklwJJhtERJi0jcwloyayitmc', threaded=False) #@nuft_op_bot
 
 # ГЛАВНАЯ КЛАВИАТУРА
 markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
 markup.row('{} Ввести группу'.format(u'\U0001f393', u'\U0001f393'),
            '{} День'.format(u'\U0001f4c5', u'\U0001f4c5'))
-markup.row('{} Уведомлять'.format(u'\U0001f4cc', u'\U0001f4cc'))
-markup.row('{} Уст. Время уведомлений'.format(u'\U000026a0', u'\U000026a0'))
+#markup.row('{} Уведомлять'.format(u'\U0001f4cc', u'\U0001f4cc'))
+#markup.row('{} Уст. Время уведомлений'.format(u'\U000026a0', u'\U000026a0'))
 markup.row('{} Помощь'.format(u'\U00002753', u'\U00002753'),
            '{} Инфо'.format(u'\U0001f4bf', u'\U0001f4bf'))
 
-
-
-#op
-op_3_7=DB.op_3_7
-op_3_7ck=DB.op_3_7ck
-op_3_8=DB.op_3_8
-op_4_7=DB.op_4_7
-op_4_8=DB.op_4_8
-op_1_6m=DB.op_1_6m
-op_1_7m=DB.op_1_7m
 
 
 # данные о клиентах
@@ -37,10 +29,12 @@ clients = []
 
 
 #данные о подержуемых группах
-g_list=["оп-3-7", "оп-3-8", "оп-3-7ск", "оп-4-8", "оп-4-7", "оп-1-6м", "оп-1-7м"]
+g_list=list_of_groups.g_list
+
+id_group=dict_of_groups.id
 
 
-GMT=0
+GMT=3
 
 def Global_set():
     global GMT
@@ -50,21 +44,15 @@ def Global_set():
 # Обработка расписания (по базе)
 def Base(group,setday):
     text={}
+    i=0
 
-    if group.lower()=='оп-3-7':
-        text=op_3_7[0].split('----------')
-    elif group.lower()=='оп-3-7ск':
-        text=op_3_7ck[0].split('----------')
-    elif group.lower()=='оп-3-8':
-        text=op_3_8[0].split('----------')
-    elif group.lower()=='оп-4-7':
-        text=op_4_7[0].split('----------')
-    elif group.lower()=='оп-3-8':
-        text=op_4_7[0].split('----------')
-    elif group.lower()=='оп-1-6м':
-        text=op_1_6m[0].split('----------')
-    elif group.lower()=='оп-1-7м':
-        text=op_1_7m[0].split('----------')
+
+    for g in g_list:
+        if g==group.lower():
+            text=ALL_DB.DB_groups[i].split('----------')
+            break
+        i=i+1
+
 
 
     split_setday=setday.split('.')
@@ -324,14 +312,14 @@ def handle_text_0(message):
                 handle_text_2(message)
             elif 'Показать' in message.text:
                 handle_text_3(message.chat.id)
-            elif 'Уведомлять' in message.text:
-                handle_text_4(message)
+            #elif 'Уведомлять' in message.text:
+                #handle_text_4(message)
             elif 'Помощь' in message.text:
                 handle_text_5(message)
             elif 'Инфо' in message.text:
                 handle_text_6(message)
-            elif 'Время уведомлений' in message.text:
-                handle_text_7(message)
+            #elif 'Время уведомлений' in message.text:
+                #handle_text_7(message)
             elif 'Назад' in message.text:
                 main_keyboard_2(message, inject=u'\U0001f609')
             gc.collect()

@@ -11,14 +11,15 @@ import gc
 
 
 #bot=telebot.TeleBot('516454220:AAEBUTygMYAHsKzjzJvqRlesULc7Q4wnbo8', threaded=False) #@StarterPack_bot
-bot=telebot.TeleBot('539989058:AAGJsaK1LAMklwJJhtERJi0jcwloyayitmc', threaded=False) #@nuft_op_bot
+#bot=telebot.TeleBot('539989058:AAGJsaK1LAMklwJJhtERJi0jcwloyayitmc', threaded=False) #@nuft_op_bot
+bot=telebot.TeleBot('538348210:AAFz5SxzUVtJ-MABJxqMzRCasUJScx4W_qY', threaded=False)  #@nuff_bot
 
 # ГЛАВНАЯ КЛАВИАТУРА
 markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
 markup.row('{} Ввести группу'.format(u'\U0001f393', u'\U0001f393'),
            '{} День'.format(u'\U0001f4c5', u'\U0001f4c5'))
-#markup.row('{} Уведомлять'.format(u'\U0001f4cc', u'\U0001f4cc'))
-#markup.row('{} Уст. Время уведомлений'.format(u'\U000026a0', u'\U000026a0'))
+markup.row('{} Уведомлять'.format(u'\U0001f4cc', u'\U0001f4cc'))
+markup.row('{} Уст. Время уведомлений'.format(u'\U000026a0', u'\U000026a0'))
 markup.row('{} Помощь'.format(u'\U00002753', u'\U00002753'),
            '{} Инфо'.format(u'\U0001f4bf', u'\U0001f4bf'))
 
@@ -38,7 +39,8 @@ GMT=3
 
 def Global_set():
     global GMT
-    GMT=0
+    GMT=3
+
 
 
 # Обработка расписания (по базе)
@@ -133,14 +135,14 @@ def check_this(message,parameter='NULL'):
                 bot.send_message(message.chat.id, 'Нажмите еще раз - <b>{}</b>'.format(message.text), parse_mode='html')
             else:
                 # bot.send_message(message.chat.id, '<b>{}</b> - это точно верная группа?\nПишите групу вот так - <b>ОП-3-8</b>'.format(message.text),parse_mode='html')
-                bot.send_message(message.chat.id, '<b>{}</b> - эта группа есть в списке?\nДоступные группы - <b>ОП-3-7, ОП-3-7ск, ОП-3-8</b>'.format(message.text), parse_mode='html')
+                bot.send_message(message.chat.id, '<b>{}</b> - такаой групы нет в списке!\n'.format(message.text), parse_mode='html')
                 bot.send_message(message.chat.id,'<b>Нажмите еще раз</b> - {} или выберите другой вариант ответа'.format(u'\U0001f393'), parse_mode='html')
         elif parameter=='День':
             if check_main_commands_bool(message.text) == True:
                 bot.send_message(message.chat.id, 'Нажмите еще раз - <b>{}</b>'.format(message.text), parse_mode='html')
             else:
                 bot.send_message(message.chat.id, '<b>Нажмите еще раз</b> - {} или выберите другой вариант ответа'.format(u'\U0001f4c5'), parse_mode='html')
-                bot.send_message(message.chat.id, '<b>{}</b> - так вписывать дату нельзя!\nНужно писать вот так - <b>04.04.20</b>'.format( message.text), parse_mode='html')
+                bot.send_message(message.chat.id, '<b>{}</b> - Неверний формат даты!\nВерно - <b>04.04.18</b>'.format( message.text), parse_mode='html')
                 main_keyboard_2(message,inject=u'\U0001f609')
 
         elif parameter=='Уведомлять':
@@ -153,13 +155,13 @@ def check_this(message,parameter='NULL'):
             if check_main_commands_bool(message.text) == True:
                 bot.send_message(message.chat.id, 'Нажмите еще раз - <b>{}</b>'.format(message.text), parse_mode='html')
             else:
-                bot.send_message(message.chat.id, '<b>{}</b> - это не верно!! \nНужно писать вот так - <b>09:30</b>'.format(message.text), parse_mode='html')
+                bot.send_message(message.chat.id, '<b>{}</b> - это не верно!! \nВерно - <b>09:30</b>'.format(message.text), parse_mode='html')
                 bot.send_message(message.chat.id,'<b>Нажмите еще раз</b> - {} или выберите другой вариант ответа'.format(u'\U000026a0'),parse_mode='html')
         elif parameter == 'Время уведомлений_2':
             if check_main_commands_bool(message.text) == True:
                 bot.send_message(message.chat.id, 'Нажмите еще раз - <b>{}</b>'.format(message.text), parse_mode='html')
             else:
-                bot.send_message(message.chat.id,'<b>{}</b> - это не верно и не забывайте про   <b>:</b>\nНужно писать вот так - <b>06:00</b>'.format( message.text), parse_mode='html')
+                bot.send_message(message.chat.id,'<b>{}</b> - это не верно и не забывайте про   <b>:</b>\nВерно - <b>06:00</b>'.format( message.text), parse_mode='html')
                 bot.send_message(message.chat.id, '<b>Нажмите еще раз</b> - {} или выберите другой вариант ответа'.format(u'\U000026a0'), parse_mode='html')
 
     except:
@@ -182,6 +184,12 @@ def send_dump_client():
                     sleep(20)
             sleep(61)
 
+def Save_JSON_clients():
+    with open('JSON_clients.py','w') as file:
+        file.write(json.dumps(clients))
+        file.close()
+
+
 
 #Админ панель
 
@@ -192,7 +200,14 @@ def handle_text(message):
                                          '/sendclients - Скинуть JSON все клиентов \n'
                                          '/time - показать время \n'
                                          '/list - список всех пользователей \n'
-                                         '/setgmt - добавление времени')
+                                         '/setgmt - добавление времени\n'
+                                         '/savejson - сохранить в файл клиентов')
+
+@bot.message_handler(commands=['savejson'])
+def handle_text(message):
+    if message.chat.id == 442738038:
+        Save_JSON_clients()
+        bot.send_message(message.chat.id, 'Клиенты были сохранены в файл!')
 
 @bot.message_handler(commands=['setgmt'])
 def handle_text(message):
@@ -216,7 +231,7 @@ def say_update(message):
     if 'SAY:' in message.text:
       text=message.text.split('SAY:')
       for i in clients:
-          bot.send_message(i['user']['chat_id'], '{} '.format(text), reply_markup=markup,
+          bot.send_message(i['user']['chat_id'], '{} '.format(text[1]), reply_markup=markup,
                          parse_mode='html')
 
 @bot.message_handler(commands=['sendclients'])
@@ -312,19 +327,19 @@ def handle_text_0(message):
                 handle_text_2(message)
             elif 'Показать' in message.text:
                 handle_text_3(message.chat.id)
-            #elif 'Уведомлять' in message.text:
-                #handle_text_4(message)
+            elif 'Уведомлять' in message.text:
+                handle_text_4(message)
             elif 'Помощь' in message.text:
                 handle_text_5(message)
             elif 'Инфо' in message.text:
                 handle_text_6(message)
-            #elif 'Время уведомлений' in message.text:
-                #handle_text_7(message)
+            elif 'Время уведомлений' in message.text:
+                handle_text_7(message)
             elif 'Назад' in message.text:
                 main_keyboard_2(message, inject=u'\U0001f609')
             gc.collect()
         except Exception as e:
-            print(e)
+           # print(e)
             bot.send_message(message.chat.id, 'Возникли ошибки... :(')
 
 
@@ -429,7 +444,7 @@ def handle_text_3(user_id):
    if i['user']['chat_id']==user_id:
      if i['user']['group'] != '' and i['user']['setday'] != '':
         bot.send_message(user_id, "Подождите пожайлуста пару секунд...")
-        print(i['user']['setday'])
+        #print(i['user']['setday'])
         out=Base(i['user']['group'],i['user']['setday'])
         text=ParseString(out)
 

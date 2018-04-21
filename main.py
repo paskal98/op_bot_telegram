@@ -11,8 +11,8 @@ import gc
 
 
 #bot=telebot.TeleBot('516454220:AAEBUTygMYAHsKzjzJvqRlesULc7Q4wnbo8', threaded=False) #@StarterPack_bot
-#bot=telebot.TeleBot('539989058:AAGJsaK1LAMklwJJhtERJi0jcwloyayitmc', threaded=False) #@nuft_op_bot
-bot=telebot.TeleBot('538348210:AAFz5SxzUVtJ-MABJxqMzRCasUJScx4W_qY', threaded=False)  #@nuff_bot
+bot=telebot.TeleBot('539989058:AAGJsaK1LAMklwJJhtERJi0jcwloyayitmc', threaded=False) #@nuft_op_bot
+#bot=telebot.TeleBot('538348210:AAFz5SxzUVtJ-MABJxqMzRCasUJScx4W_qY', threaded=False)  #@nuff_bot
 
 # ГЛАВНАЯ КЛАВИАТУРА
 markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -184,11 +184,6 @@ def send_dump_client():
                     sleep(20)
             sleep(61)
 
-def Save_JSON_clients():
-    with open('JSON_clients.py','w') as file:
-        file.write(json.dumps(clients))
-        file.close()
-
 
 
 #Админ панель
@@ -200,14 +195,8 @@ def handle_text(message):
                                          '/sendclients - Скинуть JSON все клиентов \n'
                                          '/time - показать время \n'
                                          '/list - список всех пользователей \n'
-                                         '/setgmt - добавление времени\n'
-                                         '/savejson - сохранить в файл клиентов')
+                                         '/setgmt - добавление времени')
 
-@bot.message_handler(commands=['savejson'])
-def handle_text(message):
-    if message.chat.id == 442738038:
-        Save_JSON_clients()
-        bot.send_message(message.chat.id, 'Клиенты были сохранены в файл!')
 
 @bot.message_handler(commands=['setgmt'])
 def handle_text(message):
